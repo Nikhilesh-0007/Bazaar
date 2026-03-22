@@ -23,5 +23,8 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState> & {
+  cart: import('./cartSlice').CartItem[];
+  auth: { user: import('../types').User | null; token: string | null };
+};
 export type AppDispatch = typeof store.dispatch;

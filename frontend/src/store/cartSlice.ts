@@ -23,3 +23,5 @@ const cartSlice = createSlice({
 
 export const { addItem, removeItem, updateQty, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
+export type { CartItem } from '@/types';
+
