@@ -2,9 +2,5 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "framework": "nextjs",
-  "env": {
-    "NEXT_PUBLIC_API_URL": "@bazaar_api_url",
-    "NEXT_PUBLIC_RZP_KEY": "@bazaar_rzp_key"
-  }
+  "framework": "nextjs"
 }
