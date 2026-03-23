@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { COLORS, fmt } from '@/lib/constants';
 import { StatusBadge, Btn } from '@/components/ui';
 import { useAppSelector } from '@/hooks/redux';
+import { selectUser } from '@/store/selectors';
 import { api } from '@/lib/api';
 import { Order } from '@/types';
 
 export default function OrdersPage() {
-  const user = useAppSelector(s => s.auth.user);
+  const user = useAppSelector(selectUser);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 

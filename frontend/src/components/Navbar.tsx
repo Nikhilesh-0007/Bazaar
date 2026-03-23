@@ -5,13 +5,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { COLORS } from '@/lib/constants';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
 import { logout } from '@/store/authSlice';
+import { selectCartCount, selectUser } from '@/store/selectors';
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const user = useAppSelector(s => s.auth.user);
-  const cartCount = useAppSelector(s => Array.isArray(s.cart) ? s.cart.reduce((n, i) => n + i.qty, 0) : 0);
+  const cartCount = useAppSelector(selectCartCount);
+  const user = useAppSelector(selectUser);
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 

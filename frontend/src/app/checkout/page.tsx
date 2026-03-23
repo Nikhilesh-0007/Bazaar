@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { COLORS, fmt } from '@/lib/constants';
 import { Btn, Input } from '@/components/ui';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
+import { selectCart, selectUser } from '@/store/selectors';
 import { clearCart } from '@/store/cartSlice';
 import { api } from '@/lib/api';
 
@@ -12,8 +13,8 @@ declare global { interface Window { Razorpay: any; } }
 export default function CheckoutPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const cart = useAppSelector(s => Array.isArray(s.cart) ? s.cart : []);
-  const user = useAppSelector(s => s.auth.user);
+  const cart = useAppSelector(selectCart);
+  const user = useAppSelector(selectUser);
   const [step, setStep] = useState(1);
   const [address, setAddress] = useState({ name: user?.name || '', phone: '', street: '', city: '', state: '', pincode: '' });
   const [payMethod, setPayMethod] = useState('razorpay');

@@ -4,13 +4,14 @@ import { useRouter } from 'next/navigation';
 import { COLORS, fmt } from '@/lib/constants';
 import { Btn } from '@/components/ui';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
+import { selectCart, selectUser } from '@/store/selectors';
 import { removeItem, updateQty } from '@/store/cartSlice';
 
 export default function CartPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const cart = useAppSelector(s => Array.isArray(s.cart) ? s.cart : []);
-  const user = useAppSelector(s => s.auth.user);
+  const cart = useAppSelector(selectCart);
+  const user = useAppSelector(selectUser);
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
   const delivery = subtotal > 499 ? 0 : 49;
   const total = subtotal + delivery;

@@ -4,11 +4,12 @@ import { useRouter } from 'next/navigation';
 import { COLORS, fmt } from '@/lib/constants';
 import { StatusBadge, Btn, Select } from '@/components/ui';
 import { useAppSelector } from '@/hooks/redux';
+import { selectUser } from '@/store/selectors';
 import { api } from '@/lib/api';
 
 export default function AdminPage() {
   const router = useRouter();
-  const user = useAppSelector(s => s.auth.user);
+  const user = useAppSelector(selectUser);
   const [tab, setTab] = useState<'analytics' | 'orders' | 'products'>('analytics');
   const [analytics, setAnalytics] = useState<any>(null);
   const [orders, setOrders] = useState<any[]>([]);
