@@ -6,15 +6,21 @@ const cartSlice = createSlice({
   initialState: [] as CartItem[],
   reducers: {
     addItem(state, { payload }: PayloadAction<Product>) {
-      const item = state.find(i => i.id === payload.id);
-      if (item) item.qty += 1;
-      else state.push({ ...payload, qty: 1 });
+      const items = Array.isArray(state) ? state : [];
+      const item = items.find(i => i.id === payload.id);
+      if (item) {
+        item.qty += 1;
+      } else {
+        return [...items, { ...payload, qty: 1 }];
+      }
     },
     removeItem(state, { payload }: PayloadAction<string>) {
-      return state.filter(i => i.id !== payload);
+      const items = Array.isArray(state) ? state : [];
+      return items.filter(i => i.id !== payload);
     },
     updateQty(state, { payload }: PayloadAction<{ id: string; qty: number }>) {
-      const item = state.find(i => i.id === payload.id);
+      const items = Array.isArray(state) ? state : [];
+      const item = items.find(i => i.id === payload.id);
       if (item) item.qty = Math.max(1, payload.qty);
     },
     clearCart: () => [],
@@ -24,4 +30,3 @@ const cartSlice = createSlice({
 export const { addItem, removeItem, updateQty, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
 export type { CartItem } from '@/types';
-
