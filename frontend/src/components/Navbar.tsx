@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { COLORS } from '@/lib/constants';
 import { useAppSelector, useAppDispatch } from '@/hooks/redux';
@@ -11,6 +12,8 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector(s => s.auth.user);
   const cartCount = useAppSelector(s => Array.isArray(s.cart) ? s.cart.reduce((n, i) => n + i.qty, 0) : 0);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const nav = [
     { href: '/', label: 'Home' },
@@ -44,16 +47,16 @@ export default function Navbar() {
         )}
       </Link>
 
-      {user ? (
+      {mounted && user ? (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 34, height: 34, borderRadius: '50%', background: COLORS.brandAccent, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: '#fff' }}>
             {user.name[0]}
           </div>
           <button onClick={() => { dispatch(logout()); router.push('/'); }} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', fontSize: 12 }}>Logout</button>
         </div>
-      ) : (
+      ) : mounted ? (
         <Link href="/auth" style={{ background: COLORS.brandAccent, color: '#fff', padding: '8px 18px', borderRadius: 8, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>Sign In</Link>
-      )}
+      ) : null}
     </nav>
   );
 }
