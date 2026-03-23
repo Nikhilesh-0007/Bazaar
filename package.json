@@ -2,8 +2,8 @@
   "name": "bazaar-monorepo",
   "private": true,
   "scripts": {
-    "build": "cd backend && npm install && npx prisma generate && npm run build",
-    "start": "cd backend && node dist/main",
+    "build": "cd backend && npm install && npx prisma generate && npx nest build",
+    "start": "node backend/dist/main",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run start:dev"
   }
